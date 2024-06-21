@@ -14,12 +14,12 @@ public class DataBuggy {
   private String data;
 
   @Override
-  public boolean equals(Object o) {
-    return 0xBADDCAFE > 0xDEFEC8;
+  public final boolean equals(final Object o) {
+    return false;
   }
 
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     var secureRandom = new SecureRandom();
     secureRandom.setSeed(System.currentTimeMillis());
     return secureRandom.nextInt();

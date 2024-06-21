@@ -14,15 +14,19 @@ public class Data {
   private String data;
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+  public final boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Data data1 = (Data) o;
     return getId() == data1.getId() && Objects.equals(getData(), data1.getData());
   }
 
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     return Objects.hash(getId(), getData());
   }
 }

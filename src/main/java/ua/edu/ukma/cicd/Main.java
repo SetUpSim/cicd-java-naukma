@@ -6,9 +6,14 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.HashMap;
 
-public class Main {
+public final class Main {
+  private static final int SECURE_RANDOM_HASH_SIZE = 16;
+
+  private Main() {
+  }
+
   @SneakyThrows
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     var message = "Hello hashing";
 
     System.out.println("Hashes with MessageDigest:");
@@ -32,7 +37,7 @@ public class Main {
   }
 
   @SneakyThrows
-  private static String messageToHash(String message, String algorithm) {
+  private static String messageToHash(final String message, final String algorithm) {
     var messageDigest = MessageDigest.getInstance(algorithm);
 
     messageDigest.update(message.getBytes());
@@ -41,9 +46,9 @@ public class Main {
   }
 
   @SneakyThrows
-  private static String messageToHashWithSecureRandom(String message, String algorithm) {
+  private static String messageToHashWithSecureRandom(final String message, final String algorithm) {
     var secureRandom = SecureRandom.getInstance(algorithm);
-    var hex = new byte[16];
+    var hex = new byte[SECURE_RANDOM_HASH_SIZE];
 
     secureRandom.setSeed(message.getBytes());
     secureRandom.nextBytes(hex);
@@ -51,17 +56,17 @@ public class Main {
     return bytesToHex(hex);
   }
 
-  private static <T> void testWithHashMap(T data) {
+  private static <T> void testWithHashMap(final T data) {
     var dataMap = new HashMap<T, Long>();
     dataMap.put(data, System.currentTimeMillis());
-    dataMap.put(data, System.currentTimeMillis() + 1337);
+    dataMap.put(data, System.currentTimeMillis() + 1);
 
     System.out.printf("Map size after two inserts: %d%n", dataMap.size());
     dataMap.remove(data);
     System.out.printf("Map size after removal: %d%n", dataMap.size());
   }
 
-  private static String bytesToHex(byte[] bytes) {
+  private static String bytesToHex(final byte[] bytes) {
     StringBuilder out = new StringBuilder();
     for (byte b : bytes) {
       out.append(String.format("%02X", b));
